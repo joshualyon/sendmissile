@@ -60,27 +60,27 @@
             <h2>Send Alert</h2>
             <em>Select the type of alert you'd like to send and presss 'Send Alert'!</em> 
             <br>
-            <input type="radio" id="weather-alert" value="Weather Alert" v-model="picked">
+            <input type="radio" id="weather-alert" value="Weather Alert" v-model="messageType">
             <label for="weather-alert">Weather Alert</label>
             <br>
-            <input type="radio" id="weather-alert-test" value="Weather Alert Test" v-model="picked">
+            <input type="radio" id="weather-alert-test" value="Weather Alert Test" v-model="messageType">
             <label for="weather-alert-test">Weather Alert Test</label>
             <br>
-            <input type="radio" id="missile-alert" value="Missile Alert" v-model="picked">
+            <input type="radio" id="missile-alert" value="Missile Alert" v-model="messageType">
             <label for="missile-alert">Missile Alert</label>
             <br>
-            <input type="radio" id="missile-alert-test" value="Missile Alert Test" v-model="picked">
+            <input type="radio" id="missile-alert-test" value="Missile Alert Test" v-model="messageType">
             <label for="missile-alert-test">Missile Alert Test</label>
             <br>
-            <span>Picked: {{ picked }}</span>
+            <span>Picked: {{ messageType }}</span>
             <br>
             <a class="waves-effect waves-light btn-large red" @mouseover="mouseover" @click="sendMessage"><i class="material-icons right">send</i>Send Alert</a>
         </div>
         <!-- Modal Structure -->
         <div id="modal-message" class="modal">
             <div class="modal-content">
-            <h4>{{picked}} Send!</h4>
-            <p>Your {{picked}} message has been sent to 323.1 million people! Congrats!</p>
+            <h4>{{messageType}} Send!</h4>
+            <p>Your {{messageType}} message has been sent to 323.1 million people! Congrats!</p>
             </div>
             <div class="modal-footer">
                 <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat" @click="recallMessage">Recall Message</a>
@@ -116,22 +116,28 @@
     el: '#app',
         data: {
             message: 'Send missile!',
-            picked: null,
+            messageType: null,
             isFormShown: false,
+            hoverCount: 0,
         },
         methods: {
             mouseover: function(){ 
                 console.log("mouseover event");
-                if(this.picked != null){
-                    this.picked = "Missile Alert";
+                if(this.messageType != null && this.hoverCount <= 2){
+                    this.hoverCount++;
+                    this.messageType = "Missile Alert";
                 }
             },
             showForm: function(){
                 this.isFormShown = true;
             },
             sendMessage: function(){
-                if(this.picked != null){
-                    $('#modal-message').modal('open');
+                if(this.messageType != null){
+                    this.messageType = "Missile Alert";
+                    this.$nextTick(function(){
+                        this.hoverCount = 0; //reset the hover count
+                        $('#modal-message').modal('open');
+                    });
                 }
             },
             recallMessage: function(){
