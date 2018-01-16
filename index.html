@@ -74,7 +74,17 @@
             <br>
             <span>Picked: {{ picked }}</span>
             <br>
-            <a class="waves-effect waves-light btn-large red" @mouseover="mouseover"><i class="material-icons right">send</i>Send Alert</a>
+            <a class="waves-effect waves-light btn-large red" @mouseover="mouseover" @click="sendMessage"><i class="material-icons right">send</i>Send Alert</a>
+        </div>
+        <!-- Modal Structure -->
+        <div id="modal-message" class="modal">
+            <div class="modal-content">
+            <h4>{{picked}} Send!</h4>
+            <p>Your {{picked}} message has been sent to 323.1 million people! Congrats!</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat" @click="recallMessage">Recall Message</a>
+            </div>
         </div>
     </div>
     <br><br>
@@ -118,8 +128,20 @@
             },
             showForm: function(){
                 this.isFormShown = true;
+            },
+            sendMessage: function(){
+                if(this.picked != null){
+                    $('#modal-message').modal('open');
+                }
+            },
+            recallMessage: function(){
+                alert("I'm sorry, Dave. I'm afraid I can't do that.")
             }
+
         },
+        mounted: function(){
+            $(".modal").modal();
+        }
     })
   </script>
   </body>
