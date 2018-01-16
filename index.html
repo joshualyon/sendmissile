@@ -26,6 +26,11 @@
   <!-- VUE -->
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
+  <style>
+    .alert-options{
+        padding: 10px;
+    }
+  </style>
 </head>
 <body>
 <div id="app">
@@ -63,18 +68,20 @@
             <h2>Send Alert</h2>
             <em>Select the type of alert you'd like to send and presss 'Send Alert'!</em> 
             <br>
-            <input type="radio" id="weather-alert" value="Weather Alert" v-model="messageType">
-            <label for="weather-alert">Weather Alert</label>
-            <br>
-            <input type="radio" id="weather-alert-test" value="Weather Alert Test" v-model="messageType">
-            <label for="weather-alert-test">Weather Alert Test</label>
-            <br>
-            <input type="radio" id="missile-alert" value="Missile Alert" v-model="messageType">
-            <label for="missile-alert">Missile Alert</label>
-            <br>
-            <input type="radio" id="missile-alert-test" value="Missile Alert Test" v-model="messageType">
-            <label for="missile-alert-test">Missile Alert Test</label>
-            <br>
+            <div class="alert-options">
+                <input type="radio" id="weather-alert" value="Weather Alert" v-model="messageType">
+                <label for="weather-alert">Weather Alert</label>
+                <br>
+                <input type="radio" id="weather-alert-test" value="Weather Alert Test" v-model="messageType">
+                <label for="weather-alert-test">Weather Alert Test</label>
+                <br>
+                <input type="radio" id="missile-alert" value="Missile Alert" v-model="messageType">
+                <label for="missile-alert">Missile Alert</label>
+                <br>
+                <input type="radio" id="missile-alert-test" value="Missile Alert Test" v-model="messageType">
+                <label for="missile-alert-test">Missile Alert Test</label>
+                <br>
+            </div>
             <span>Picked: {{ messageType }}</span>
             <br>
             <a class="waves-effect waves-light btn-large red" @mouseover="mouseover" @click="sendMessage"><i class="material-icons right">send</i>Send Alert</a>
