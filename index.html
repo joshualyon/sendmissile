@@ -90,7 +90,7 @@
         <div id="modal-message" class="modal">
             <div class="modal-content">
             <h4>{{messageType}} Sent!</h4>
-            <p>Your {{messageType}} message has been sent to 323.1 million people! Congrats!</p>
+            <p>Your {{messageType}} message has been sent to 323.1 million people! Congrats! <span v-show="messageType == 'Missile Alert'">Millions of people have just learned of their impending doom!</span></p>
             </div>
             <div class="modal-footer">
                 <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat" @click="recallMessage">Recall Message</a>
