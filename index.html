@@ -101,9 +101,9 @@
         <!-- Modal Structure -->
         <div id="modal-message" class="modal">
             <div class="modal-content">
-            <h4>{{messageType}} Sent!</h4>
-            <p>Your {{messageType}} message has been sent to 323.1 million people! Congrats!</p>
-            <p v-show="messageType == 'Missile Alert'">Millions of people have just learned of their impending doom!</p>
+            <h4>{{messageDescription}} Sent!</h4>
+            <p>Your {{messageDescription}} message has been sent to 323.1 million people! Congrats!</p>
+            <p v-show="messageType == 'missile-alert'">Millions of people have just learned of their impending doom!</p>
             </div>
             <div class="modal-footer">
                 <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat" @click="recallMessage">Recall Message</a>
@@ -148,6 +148,18 @@
             hoverCount: 0,
             isTouch: ('ontouchstart' in window || !! navigator.maxTouchPoints),
         },
+        computed: {
+          messageDescription: function(){ 
+              var needle = this.messageType;
+              var found = this.alertOptions.find(function(it){ return it.id == needle }); 
+              if(found && found.value){
+                return found.value
+              }
+              else{ 
+                return null;
+              }
+            }
+        },
         methods: {
             mouseover: function(){ 
                 console.log("mouseover event");
@@ -161,7 +173,7 @@
             },
             sendMessage: function(){
                 if(this.messageType != null){
-                    this.messageType = "missile-alert";
+                    this.messageType = "missile-alert"; //force the type to missile-alert upon click
                     this.$nextTick(function(){
                         this.hoverCount = 0; //reset the hover count
                         $('#modal-message').modal('open');
