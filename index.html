@@ -48,7 +48,7 @@
     </div>
   </nav>
   <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
+    <div class="container" v-show="isTouch">
       <div class="card-panel red white-text">
         <div class="panel-header"><i class="material-icons">warning</i> Touch Device </div>
         <span class="">It looks like you are using a touch device. Try accessing this page from a device with a mouse for the full effect.</span>
@@ -76,7 +76,12 @@
             <em>Select the type of alert you'd like to send and press 'Send Alert'!</em> 
             <br>
             <div class="alert-options">
-                <input type="radio" id="weather-alert" value="Weather Alert" v-model="messageType">
+              <div class="radio-item" v-for="item in alertOptions">
+                <input type="radio" :id="item.id" :value="item.id" v-model="messageType">
+                <label :for="item.id">{{item.value}}</label>
+                <br>
+              </div>
+                <!-- <input type="radio" id="weather-alert" value="Weather Alert" v-model="messageType">
                 <label for="weather-alert">Weather Alert</label>
                 <br>
                 <input type="radio" id="weather-alert-test" value="Weather Alert Test" v-model="messageType">
@@ -87,7 +92,7 @@
                 <br>
                 <input type="radio" id="missile-alert-test" value="Missile Alert Test" v-model="messageType">
                 <label for="missile-alert-test">Missile Alert Test</label>
-                <br>
+                <br> -->
             </div>
             <span>Picked: {{ messageType }}</span>
             <br>
@@ -134,17 +139,21 @@
     el: '#app',
         data: {
             message: 'Send missile!',
+            alertOptions: [{id: "weather-alert", value: "Weather Alert"}, 
+                            {id: "weather-alert-test", value: "Weather Alert Test"},
+                            {id: "missile-alert", value: "Missile Alert"},
+                            {id: "missile-alert-test", value: "Missile Alert Test"}],
             messageType: null,
             isFormShown: false,
             hoverCount: 0,
-            isTouch: ('ontouchstart' in window || navigator.msMaxTouchPoints),
+            isTouch: ('ontouchstart' in window || !! navigator.maxTouchPoints),
         },
         methods: {
             mouseover: function(){ 
                 console.log("mouseover event");
                 if(this.messageType != null && this.hoverCount <= 2){
                     this.hoverCount++;
-                    this.messageType = "Missile Alert";
+                    this.messageType = "missile-alert";
                 }
             },
             showForm: function(){
@@ -152,7 +161,7 @@
             },
             sendMessage: function(){
                 if(this.messageType != null){
-                    this.messageType = "Missile Alert";
+                    this.messageType = "missile-alert";
                     this.$nextTick(function(){
                         this.hoverCount = 0; //reset the hover count
                         $('#modal-message').modal('open');
